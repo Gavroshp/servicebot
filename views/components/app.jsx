@@ -7,6 +7,9 @@ import {connect} from "react-redux";
 import {setUid, setUser, dismissAlert, setPermissions} from "./utilities/actions"
 import { store } from "../store"
 
+import i18n from './utilities/i18n'
+import { I18nextProvider, translate } from "react-i18next";
+
 class App extends React.Component {
 
     constructor(props) {
@@ -35,13 +38,20 @@ class App extends React.Component {
             document.getElementById('servicebot-loader').classList.add('move-out');
         }
 
+        const childrenWithProps = React.Children.map(self.props.children, child => React.cloneElement(child, { t: this.props.t, i18n: this.props.i18n }));
 
         return(
             <div className="app-container" style={{backgroundColor: background}}>
                 {this.props.modal && this.props.modal}
-                <NavBootstrap handleLogout={this.handleLogout}/>
-                {self.props.children}
-                <Footer/>
+                <NavBootstrap handleLogout={this.handleLogout}
+                              t={this.props.t}
+                              i18n={this.props.i18n}
+                />
+                {childrenWithProps}
+                <Footer
+                    t={this.props.t}
+                    i18n={this.props.i18n}
+                />
             </div>
         );
     }
@@ -62,5 +72,14 @@ let mapDispatchToProps = function(dispatch){
 
         }}
 }
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+const AppTrans = translate("translations")(connect(mapStateToProps, mapDispatchToProps)(App));
+
+export default (props) => {
+    return (
+        <I18nextProvider i18n={i18n}>
+            <AppTrans {...props}/>
+        </I18nextProvider>
+    )
+}
 

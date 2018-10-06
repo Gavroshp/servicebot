@@ -1340,3 +1340,26 @@ span.sbi--embed-label, span.sbi--webhook-label {
         font-size: 36px !important;
     }
 }
+
+.lang-buttons {
+    display: inline-block;
+    margin-top: 7px;
+}
+
+.lang-buttons__item {
+    font-weight: bold;
+    background: none;
+    border: none;
+    color: #fff;
+}
+
+.lang-buttons__item.selected {
+    border: 1px solid;
+}
+
+.lang-buttons__item-ru {
+
+}
+.lang-buttons__item-en {
+
+}

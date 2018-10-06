@@ -221,6 +221,7 @@ class NavBootstrap extends React.Component {
             embed = true;
         }
 
+        const changeLanguage = lng => this.props.i18n.changeLanguage(lng);
 
         return (
             <div>
@@ -230,6 +231,12 @@ class NavBootstrap extends React.Component {
                         <div className="container-fluid">
                             <div className="navbar-header">
                                 <Link to="/" className="navbar-brand nav-logo"><img src="/api/v1/system-options/file/brand_logo"/></Link>
+
+                                <div className="lang-buttons">
+                                    <button key='en' className={`lang-buttons__item lang-buttons__item-en ${this.props.i18n.language === 'en' ? 'selected' : ''}`} onClick={() => changeLanguage('en')}>en</button>
+                                    <button key='ru' className={`lang-buttons__item lang-buttons__item-ru ${this.props.i18n.language === 'ru' ? 'selected' : ''}`} onClick={() => changeLanguage('ru')}>ru</button>
+                                </div>
+
                                 <Authorizer anonymous={true}>
                                     <Link className="mobile-login-button" to="/login">Login</Link>
                                 </Authorizer>
@@ -269,7 +276,7 @@ class NavBootstrap extends React.Component {
                                         </li>
                                         <li>
                                             <button className="btn btn-link btn-signout"
-                                                    onClick={this.props.handleLogout} style={linkTextStyle}>Log Out</button>
+                                                    onClick={this.props.handleLogout} style={linkTextStyle}>{this.props.t('logout')}</button>
                                         </li>
                                     </ul>
                                 </Authorizer>
